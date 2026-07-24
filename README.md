@@ -46,6 +46,8 @@ Sigue estos pasos para tener el juego funcionando en tu pc:
 3. **Disfruta jugando en tu mismo pc con tu familia o amigos :)**
 
 ## Capturas del juego
+**MODO OFFLINE**
+
 <img width="312" height="404" alt="image" src="https://github.com/user-attachments/assets/f14e351f-3e59-49cb-8a62-398a4e29fcab" />
 
 <img width="179" height="104" alt="image" src="https://github.com/user-attachments/assets/8d3d3878-b2eb-4e5f-affe-d5ad34e1effc" />
@@ -57,6 +59,18 @@ Sigue estos pasos para tener el juego funcionando en tu pc:
 <img width="290" height="398" alt="image" src="https://github.com/user-attachments/assets/2801995c-f27c-4abf-bbb1-d7b89be39eca" />
 
 <img width="296" height="398" alt="image" src="https://github.com/user-attachments/assets/4c50d183-6517-4e85-8559-8fd3a8fd77e9" />
+
+**MODO ONLINE**
+--Vista del host (Jugador 1)
+<img width="297" height="401" alt="image" src="https://github.com/user-attachments/assets/c5a78cc3-a1ae-4c7b-afc3-e0316358f51f" />
+<img width="294" height="381" alt="image" src="https://github.com/user-attachments/assets/735861a0-8556-49ca-a20c-84d622685e12" />
+
+--Vista del cliente (Jugador 2)
+<img width="295" height="387" alt="image" src="https://github.com/user-attachments/assets/bbe193dc-5ae0-4410-8251-293e407e7a8b" />
+
+--Vista de los dos jugadores conectados en la misma computadora (si es en LAN o remoto el otro computador debería ver solo su ventana)
+<img width="600" height="395" alt="image" src="https://github.com/user-attachments/assets/423bc2f2-41c0-466c-9200-c460f669b16a" />
+
 
 ## Tecnologías Utilizadas
 Python: Lenguaje de programación principal.
