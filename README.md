@@ -30,7 +30,8 @@ Un clásico juego del "Gato" (Tic-Tac-Toe) con soporte para partidas multijugado
   2. Escribe "ngrok authtoken TU_TOKEN_AQUI" en la terminal de WindowsPowershell o Símbolo del sistema y en TU_TOKEN_AQUI usa el token que te dió ngrok para conectar tu cuenta. Va salir un mensaje tipo: "Authtoken saved to configuration file" o parecido.
   3. Escribe "ngrok tcp 5000" en la terminal de WindowsPowershell o Símbolo del sistema.
   4. Anota la ip que te asigna ngrok "ej.: 0.tcp.ngrok.io" y el puerto que asigne ngrok "ej.: 12345".
-  5. Aprieta Join y se deberían de conectar automáticamente. (Si no llegara a funcionar es porque tu firewall bloquea las conexiones exteriores y para eso necesitas configurar la regla de que permita usar el puerto asignado por ngrok especialmente al archivo .exe).
+  5. Aprieta Join y se deberían de conectar automáticamente. (Si no llegara a funcionar es porque tu firewall bloquea las conexiones exteriores y para eso tienes que usar esta opción. Revisa el punto VI.)
+  6. Necesitas configurar la regla de que permita usar el puerto asignado por ngrok especialmente al archivo .exe. (De todas maneras Windows te preguntara si quieres usar esta aplicación en Redes privadas y públicas, así que esto es totalmente).
 
 ##  Instalación
 
