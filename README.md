@@ -68,6 +68,9 @@ Tkinter: Biblioteca estándar para la interfaz gráfica de usuario (GUI).
 
 Sockets: Para la comunicación en red entre el servidor y el cliente.
 
+## ¿Dónde ver los cambios recientes?
+Consulta el [registro de actualizaciones](CHANGELOG.md) para ver los cambios y mejoras recientes que se hagan durante este tiempo y ponerte al día.
+
 ## ¿Cómo Contribuir?
 ¡Las contribuciones son bienvenidas! Si deseas mejorar el proyecto, por favor:
 * Abre un ISSUE en el repositorio y deja tus sugerencias o ideas de cómo puedo mejorarlo.
