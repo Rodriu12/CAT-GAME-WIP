@@ -8,7 +8,7 @@ ventana = Tk()
 ventana.title("Cat Game - LAN")
 ventana.geometry("400x500")
 
-# Variables globales para no tener errores de "nombrevariable is not defined" y acceder más fácilmente sin volver a declararlas
+# Variables globales para no tener errores tipo "variable is not defined" y acceder fácilmente al llamarlas
 turno = 0
 listaBotones = []
 t = []  # "N", "X", "O"
@@ -24,8 +24,9 @@ local_symbol = ""
 server_socket = None
 client_socket = None
 receiver_thread = None
+connection_thread = None  # Hilo para aceptar la conexión entrante (Jugador 2)
 
-
+# Utilidades y funciones que hacen funcionar la interfaz gráfica del juego
 def bloquear():
     for btn in listaBotones:
         btn.config(state="disable")
@@ -67,17 +68,15 @@ def ocultar_botones_post_partida():
     btn_reiniciar.place_forget()
     btn_salir.place_forget()
 
-# ---------- Funciones de red para el correcto funcionamiento del juego----------
+# ---------- Funciones de red para una conexión estable entre los dos jugadores ----------
 def send_message(sock, msg):
     try:
         sock.sendall((msg + "\n").encode())
-        print("[ENVIADO]", msg)
-    except Exception as e:
-        print("[ERROR al enviar]", e)
+    except:
+        pass
 
 def process_message(msg):
     global turno, game_started, connected, opponent_name
-    print("[RECIBIDO]", msg)  # Depuración
     parts = msg.strip().split()
     if not parts:
         return
@@ -124,7 +123,6 @@ def process_message(msg):
         mostrar_empate()
         game_started = False
     elif cmd == "REINICIAR":
-        print("REINICIANDO por orden del otro jugador")
         reiniciar_tablero()
         game_started = True
         desbloquear()
@@ -150,9 +148,39 @@ def receive_messages(sock):
     ventana.after(0, lambda: messagebox.showerror("Conexión perdida", "Se ha perdido la conexión."))
     ventana.after(0, bloquear)
 
-# ---------- Funciones de inicio del que va a actuar de HOST----------
+# ---------- Funciones de inicio (en hilos separados para evitar que se congele y diga "Not Responding") ----------
+def esperar_conexion():
+    global connected, client_socket, game_started, connection_thread
+    try:
+        client_socket, addr = server_socket.accept()
+        connected = True
+        # Iniciar hilo de recepción
+        receiver_thread = threading.Thread(target=receive_messages, args=(client_socket,), daemon=True)
+        receiver_thread.start()
+        # Enviar nombre y START
+        send_message(client_socket, "NAME " + local_name)
+        time.sleep(0.2)
+        send_message(client_socket, "START")
+        # Actualizar GUI en el hilo principal
+        ventana.after(0, lambda: on_connection_established())
+    except Exception as e:
+        ventana.after(0, lambda: messagebox.showerror("Error", "Error en la conexión: " + str(e)))
+        ventana.after(0, lambda: btn_host.config(state="normal"))
+
+def on_connection_established():
+    global game_started
+    game_started = True
+    desbloquear()
+    actualizar_turno()
+    btn_host.config(state="disabled")
+    btn_join.config(state="disabled")
+    entry_ip.config(state="disabled")
+    entry_port.config(state="disabled")
+    ocultar_botones_post_partida()
+    messagebox.showinfo("Conectado", "¡Cliente conectado! El juego comienza.")
+
 def host_game():
-    global is_server, is_client, connected, server_socket, client_socket, receiver_thread
+    global is_server, is_client, connected, server_socket, connection_thread
     global local_name, opponent_name, local_symbol, game_started, turno
     try:
         port = int(entry_port.get())
@@ -169,31 +197,36 @@ def host_game():
         server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server_socket.bind((ip, port))
         server_socket.listen(1)
-        messagebox.showinfo("Esperando", "Esperando conexión del cliente...")
-        client_socket, addr = server_socket.accept()
-        connected = True
         is_server = True
         is_client = False
         local_symbol = "X"
         turno = 0
-        send_message(client_socket, "NAME " + local_name)
-        receiver_thread = threading.Thread(target=receive_messages, args=(client_socket,), daemon=True)
-        receiver_thread.start()
-        time.sleep(0.5)
-        send_message(client_socket, "START")
-        game_started = True
-        desbloquear()
-        actualizar_turno()
+        game_started = False
+        connected = False
+        opponent_name = ""
+
+        # Deshabilita los botones hasta que alguien se conecte
         btn_host.config(state="disabled")
         btn_join.config(state="disabled")
         entry_ip.config(state="disabled")
         entry_port.config(state="disabled")
-        ocultar_botones_post_partida()
+        turnoJugador.set("Esperando conexión...")
+
+        # Inicia el hilo para aceptar la conexión entrante del jugador 2
+        connection_thread = threading.Thread(target=esperar_conexion, daemon=True)
+        connection_thread.start()
+
+        # Ahora muestra el mensaje de que está esperando al jugador 2
+        messagebox.showinfo("Esperando", "Esperando conexión del cliente...\n")
+
     except Exception as e:
-        messagebox.showerror("Error", "No se pudo iniciar: " + str(e))
+        messagebox.showerror("Error", "No se pudo iniciar el servidor: " + str(e))
         if server_socket:
             server_socket.close()
-        connected = False
+        btn_host.config(state="normal")
+        btn_join.config(state="normal")
+        entry_ip.config(state="normal")
+        entry_port.config(state="normal")
 
 def join_game():
     global is_server, is_client, connected, client_socket, receiver_thread
@@ -217,9 +250,13 @@ def join_game():
         is_server = False
         local_symbol = "O"
         turno = 1
+        game_started = False
+        opponent_name = ""
+
         send_message(client_socket, "NAME " + local_name)
         receiver_thread = threading.Thread(target=receive_messages, args=(client_socket,), daemon=True)
         receiver_thread.start()
+
         btn_host.config(state="disabled")
         btn_join.config(state="disabled")
         entry_ip.config(state="disabled")
@@ -227,13 +264,14 @@ def join_game():
         bloquear()
         turnoJugador.set("Conectado, esperando inicio...")
         ocultar_botones_post_partida()
+
     except Exception as e:
         messagebox.showerror("Error", "No se pudo conectar: " + str(e))
         if client_socket:
             client_socket.close()
         connected = False
 
-# ---------- Funcion de los clic que hacen los jugadores----------
+# Función que al hacer clic en el tablero, muestra las X y O de los dos jugadores que están jugando
 def cambiar(num):
     global turno, t, game_started, connected
     if not game_started or not connected:
@@ -270,13 +308,12 @@ def cambiar(num):
         send_message(client_socket, "DRAW")
         game_started = False
 
-# ---------- Funciones de reinicio para jugar otra vez ----------
+# ---------- Funciones del reinicio del juego al querer jugar de nuevo----------
 def reiniciar_tablero():
     global t, turno
     for i in range(9):
         t[i] = "N"
         listaBotones[i].config(text="", bg="lightgray", state="normal")
-    # El servidor siempre empieza (X), el cliente espera (O)
     if is_server:
         turno = 0
     else:
@@ -288,10 +325,7 @@ def jugar_de_nuevo():
     if not connected:
         messagebox.showerror("Error", "No hay conexión con el otro jugador.")
         return
-    print("JUGAR DE NUEVO (local)")
-    # Enviar el mensaje de reinicio al cliente o servidor dependiendo quién envíe primero el mensaje
     send_message(client_socket, "REINICIAR")
-    # Reinicia localmente el tablero al confirmarse el reinicio
     reiniciar_tablero()
     game_started = True
     desbloquear()
@@ -301,7 +335,7 @@ def jugar_de_nuevo():
 def salir():
     ventana.destroy()
 
-# ---------- Funciones que verifican en cuál posición ganó el jugador 1 o 2 ----------
+# ---------- Funciones de verificación del ganador y esta ve en qué posición válida gana o empata----------
 def verificar_ganador(simbolo):
     if (t[0] == simbolo and t[1] == simbolo and t[2] == simbolo) or \
        (t[3] == simbolo and t[4] == simbolo and t[5] == simbolo) or \
@@ -322,7 +356,7 @@ def verificar_empate():
             return False
     return True
 
-# ---------- Interfaz gráfica del videojuego (pueden modificarla a su gusto :) )----------
+# ---------- Interfaz gráfica del juego ----------
 Label(ventana, text="IP:").place(x=50, y=10)
 entry_ip = Entry(ventana, width=15)
 entry_ip.insert(0, "127.0.0.1")
@@ -355,7 +389,7 @@ for i, (x, y) in enumerate(posiciones):
 
 bloquear()
 
-# Botones post-partida (inicialmente ocultos mientras espera la conexión del cliente)
+# Botones de salir o reiniciar el juego dependiendo de quién lo envíe se reinicia el juego
 btn_reiniciar = Button(ventana, bg="#006", fg="white", text="Jugar de nuevo", width=15, height=2, command=jugar_de_nuevo)
 btn_salir = Button(ventana, bg="#006", fg="white", text="Salir", width=10, height=2, command=salir)
 
