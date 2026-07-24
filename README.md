@@ -1,4 +1,4 @@
-# CAT-GAME-WIP (Modo Offline y Modo Online (Puedes jugar en LAN usando la misma red o con tu amigo nacional o internacional))
+# CAT-GAME-WIP modo offline y modo online
 
 ![Python](https://img.shields.io/badge/Python-3.6+-blue.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
