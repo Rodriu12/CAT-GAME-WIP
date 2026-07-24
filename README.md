@@ -71,6 +71,7 @@ Sockets: Para la comunicación en red entre el servidor y el cliente.
 ## ¿Cómo Contribuir?
 ¡Las contribuciones son bienvenidas! Si deseas mejorar el proyecto, por favor:
 * Abre un ISSUE en el repositorio y deja tus sugerencias o ideas de cómo puedo mejorarlo.
+* Si no sabes como abrir un ISSUE, contáctame a este correo para las sugerencias o ideas que tengas: "rodriseralarcon98@gmail.com".
 
 ##  Licencia y Derechos de Autor
 Este proyecto está bajo la Licencia MIT. Puedes usarlo para tu proyecto educativo en tu universidad o instituto en el que estudies. Esto significa que eres libre de usar, copiar, modificar, fusionar, publicar, distribuir, sublicenciar y/o vender copias del software, siempre y cuando se cumplan las siguientes condiciones:
