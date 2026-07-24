@@ -51,13 +51,13 @@ Sigue estos pasos para tener el juego funcionando en tu pc:
 <div align="center"> <img src="https://github.com/user-attachments/assets/f14e351f-3e59-49cb-8a62-398a4e29fcab" alt="Offline 1" width="30%" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"> <img src="https://github.com/user-attachments/assets/8d3d3878-b2eb-4e5f-affe-d5ad34e1effc" alt="Offline 2" width="30%" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"> <img src="https://github.com/user-attachments/assets/b7563a0f-1d41-4435-9843-943d9c10de12" alt="Offline 3" width="30%" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"> </div><div align="center"> <img src="https://github.com/user-attachments/assets/b3989064-95d7-46ba-8b34-535618fd8b5c" alt="Offline 4" width="30%" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"> <img src="https://github.com/user-attachments/assets/2801995c-f27c-4abf-bbb1-d7b89be39eca" alt="Offline 5" width="30%" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"> <img src="https://github.com/user-attachments/assets/4c50d183-6517-4e85-8559-8fd3a8fd77e9" alt="Offline 6" width="30%" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"> </div>
 
 **MODO ONLINE**
---Vista del host (Jugador 1)
+* Vista del host (Jugador 1)
 <div align="center"> <img src="https://github.com/user-attachments/assets/c5a78cc3-a1ae-4c7b-afc3-e0316358f51f" alt="Host 1" width="45%" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"> <img src="https://github.com/user-attachments/assets/735861a0-8556-49ca-a20c-84d622685e12" alt="Host 2" width="45%" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"> </div>
 
---Vista del cliente (Jugador 2)
+* Vista del cliente (Jugador 2)
 <div align="center"> <img src="https://github.com/user-attachments/assets/bbe193dc-5ae0-4410-8251-293e407e7a8b" alt="Cliente" width="45%" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"> </div>
 
---Vista de los dos jugadores conectados en la misma computadora (Nota: En una partida real en LAN o remoto, cada jugador ve solo su propia ventana. Esta imagen simula ambas vistas en un mismo equipo para fines demostrativos)
+* Vista de los dos jugadores conectados en la misma computadora (Nota: En una partida real en LAN o remoto, cada jugador ve solo su propia ventana. Esta imagen simula ambas vistas en un mismo equipo para fines demostrativos)
 <div align="center"> <img src="https://github.com/user-attachments/assets/423bc2f2-41c0-466c-9200-c460f669b16a" alt="Ambos" width="80%" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);"> </div>
 
 
