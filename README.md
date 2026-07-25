@@ -40,7 +40,8 @@ Sigue estos pasos para tener el juego funcionando en tu pc:
 1.  **Clona el repositorio:**
     ```bash
     git clone https://github.com/TU_USUARIO/gato-online.git
-
+    ```
+    
     O descarga el archivo .zip apretando "<> Code", selecciona "Download ZIP" y descomprimelo en donde tú quieras usando tu herramienta preferida.
 
 2. **Ejecuta el archivo .exe que tú quieras ejecutar**
